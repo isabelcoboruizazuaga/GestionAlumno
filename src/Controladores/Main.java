@@ -45,6 +45,7 @@ public class Main {
             
             AlumnoAD al = ventanaPrincipal.getAlumno();
             alumnos.add(al);
+            System.out.println("29");
             oos.writeObject(alumnos);
 
             oos.close();
