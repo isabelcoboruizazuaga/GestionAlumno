@@ -93,28 +93,25 @@ public class AltaAlumno extends javax.swing.JDialog {
     private void initComponents() {
 
         tfAltaNombre = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        tfNotaExtra = new javax.swing.JTextField();
+        tfnot1Ev = new javax.swing.JTextField();
+        tfNotaFinal = new javax.swing.JTextField();
+        tfnot2Ev = new javax.swing.JTextField();
         btDarAlta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        tfAltaNombre.setText("Pepe Perez");
-
-        jTextField2.setText("jTextField2");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        tfAltaNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                tfAltaNombreActionPerformed(evt);
             }
         });
 
-        jTextField3.setText("jTextField3");
-
-        jTextField4.setText("jTextField4");
-
-        jTextField5.setText("jTextField5");
+        tfNotaExtra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfNotaExtraActionPerformed(evt);
+            }
+        });
 
         btDarAlta.setText("Dar de Alta");
         btDarAlta.addActionListener(new java.awt.event.ActionListener() {
@@ -127,19 +124,20 @@ public class AltaAlumno extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(104, 104, 104)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tfAltaNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField5)
-                    .addComponent(jTextField4))
-                .addContainerGap(97, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(179, Short.MAX_VALUE)
                 .addComponent(btDarAlta)
                 .addGap(40, 40, 40))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(104, 104, 104)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tfNotaExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(tfAltaNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                        .addComponent(tfnot1Ev)
+                        .addComponent(tfnot2Ev)
+                        .addComponent(tfNotaFinal)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,16 +145,16 @@ public class AltaAlumno extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(tfAltaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfnot1Ev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfnot2Ev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfNotaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfNotaExtra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btDarAlta)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -164,18 +162,44 @@ public class AltaAlumno extends javax.swing.JDialog {
 
     private void btDarAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDarAltaActionPerformed
         setnMatricula(nMatricula);
+        //Compruebo si los campos tienen contenido y si no lo tienen les asigno por defecto
         setNombre(tfAltaNombre.getText());
-        setNot1Ev(not1Ev);
-        setNota2Ev(nota2Ev);
-        setNotaFinal(notaFinal);
-        setNotaExtra(notaExtra);
-        VentanaPrincipal principal= new VentanaPrincipal();
-        
+        if (!tfnot1Ev.getText().isEmpty()) {
+            setNot1Ev(Float.parseFloat(tfnot1Ev.getText()));
+        } else {
+            setNot1Ev(0);
+        }
+        if (!tfnot2Ev.getText().isEmpty()) {
+            setNota2Ev(Float.parseFloat(tfnot2Ev.getText()));
+
+        } else {
+            setNota2Ev(0);
+        }
+
+        if (!tfNotaFinal.getText().isEmpty()) {
+            setNotaFinal(Float.parseFloat(tfNotaFinal.getText()));
+        } else {
+            setNotaFinal(0);
+        }
+
+        if (!tfNotaExtra.getText().isEmpty()) {
+            setNotaExtra(Float.parseFloat(tfNotaExtra.getText()));
+        } else {
+            setNotaExtra(0);
+        }
+
+        VentanaPrincipal principal = new VentanaPrincipal();
+        principal.aniadiralumno(this);
+
     }//GEN-LAST:event_btDarAltaActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void tfNotaExtraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNotaExtraActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_tfNotaExtraActionPerformed
+
+    private void tfAltaNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAltaNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfAltaNombreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,11 +245,11 @@ public class AltaAlumno extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btDarAlta;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField tfAltaNombre;
+    private javax.swing.JTextField tfNotaExtra;
+    private javax.swing.JTextField tfNotaFinal;
+    private javax.swing.JTextField tfnot1Ev;
+    private javax.swing.JTextField tfnot2Ev;
     // End of variables declaration//GEN-END:variables
 
 }

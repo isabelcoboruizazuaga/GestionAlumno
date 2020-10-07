@@ -33,15 +33,11 @@ public class Main {
         //Cargamos los datos del fichero
         alumnos= iniciar();
         
-        for(int i=0;i<alumnos.size();i++){
-            System.out.println(alumnos.get(i).getNombre());
-        }
-        
        //Carga la interfaz gráfica y la rellena con el contenido del fichero
         VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
         ventanaPrincipal.setLocationRelativeTo(null);
         ventanaPrincipal.setVisible(true);
-        ventanaPrincipal.sacarAlumnoArray(alumnos);
+        ventanaPrincipal.meterrArrayTabla(alumnos);
         
         ventanaPrincipal.addWindowListener(new WindowAdapter() {
             //se asegura de que al cerrar la ventana quede todo escrito en el fichero
