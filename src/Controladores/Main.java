@@ -7,6 +7,8 @@ package Controladores;
 
 import Modelos.AlumnoAD;
 import Vistas.VentanaPrincipal;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -20,6 +22,9 @@ import javax.swing.JOptionPane;
  */
 public class Main {
 
+    ArrayList<AlumnoAD> alumnos = new ArrayList<AlumnoAD>();
+    String ruta = "alumnos.txt";
+
     /**
      * @param args the command line arguments
      */
@@ -28,44 +33,36 @@ public class Main {
         ventanaPrincipal.setLocationRelativeTo(null);
         ventanaPrincipal.setVisible(true);
 
-        String ruta = "algo.txt";
+        ventanaPrincipal.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                
+            }
+        });
+
+    }
+
+    public ArrayList<AlumnoAD> iniciar() {
+        ArrayList<AlumnoAD> alumn = new ArrayList<AlumnoAD>();
+        File fichero = new File(ruta);
 
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(ruta)));
+            //Si el fichero no existe lo creo
+            if (!fichero.exists()) {
+                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(ruta)));
+                oos.writeObject(alumnos);
 
-            ArrayList<AlumnoAD> alumnos = new ArrayList<AlumnoAD>();
-            AlumnoAD unAlumno = new AlumnoAD(1, "Pablo", 9, 8, 9, 1);
-            alumnos.add(unAlumno);
-
-            AlumnoAD a = new AlumnoAD(1, "Pedro", 2, 3, 4, 0);
-            alumnos.add(a);
-
-            AlumnoAD b = new AlumnoAD(1, "Pepe", 5, 6, 5, 5);
-            alumnos.add(b);
-            
-            AlumnoAD al = ventanaPrincipal.getAlumno();
-            alumnos.add(al);
-            oos.writeObject(alumnos);
-
-            oos.close();
+                oos.close();
+            }
         } catch (IOException ex) {
             System.out.println("La ruta no existe, remalardo");
 
         }
-
+        //Cuando el fichero exista seguro lo leo
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(ruta)));
 
             try {
-
-                ArrayList<AlumnoAD> destino = (ArrayList<AlumnoAD>) ois.readObject();
-                for (int i = 0; i < destino.size(); i++) {
-
-                    Object alumno = destino.get(i);
-                    if (alumno instanceof AlumnoAD) {
-                        ventanaPrincipal.cargarTabla((AlumnoAD)alumno);
-                    }
-                }
+                alumn = (ArrayList<AlumnoAD>) ois.readObject();
 
             } catch (ClassNotFoundException exc) {
                 System.out.println("patata");
@@ -74,29 +71,27 @@ public class Main {
                 System.out.println("puta");
             }
 
-//        try {
-//            FileInputStream in= new FileInputStream("input.txt");
-//
-//            
-////        ventanaPrincipal.set (new WindowsAdpter()){
-////        onClosing(){
-////            guardarArrayListenFichero;
-////        }
-////        onOpening(){
-////            cargarListaAlumnosDesdeFichero();
-////        }
-////    }
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-            
-            
         } catch (IOException ex) {
             System.out.println("No existe el archivo");
         }
-      }
+        
+        //Devuelve la lista de alumnos obtenida en la lectura
+        return alumn;
+    }
     
-    public void  guardarArrayListenFichero(){}
-    public void cargarListaAlumnosDesdeFichero(){}
-    
+    public void escribir(){
+        ArrayList<AlumnoAD> alumn = new ArrayList<AlumnoAD>();
+        
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(ruta)));
+            //Se escriben los alumnos del array principal (el cual se mantiene actualizado)
+            oos.writeObject(alumnos);
+
+            oos.close();
+
+        } catch (IOException ex) {
+            System.out.println("La ruta no existe, remalardo");
+
+        }
+    }
 }
