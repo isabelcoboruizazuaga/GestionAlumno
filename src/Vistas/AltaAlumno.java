@@ -19,6 +19,11 @@ public class AltaAlumno extends javax.swing.JDialog {
     private int nMatricula;
     private String nombre;
     private float not1Ev, nota2Ev, notaFinal, notaExtra;
+    private int comprobador=0;
+    
+    public int getComprobador(){
+        return comprobador;
+    }
 
     public int getnMatricula() {
         return nMatricula;
@@ -163,34 +168,43 @@ public class AltaAlumno extends javax.swing.JDialog {
     private void btDarAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDarAltaActionPerformed
         setnMatricula(nMatricula);
         //Compruebo si los campos tienen contenido y si no lo tienen les asigno por defecto
-        setNombre(tfAltaNombre.getText());
+        
+        if(!tfAltaNombre.getText().isEmpty()){
+            setNombre(tfAltaNombre.getText());
+        }else{
+            //Se le suma al comprobador, si todos los campos estan vacíos su valor será 5
+            comprobador++;
+        }
         if (!tfnot1Ev.getText().isEmpty()) {
             setNot1Ev(Float.parseFloat(tfnot1Ev.getText()));
         } else {
             setNot1Ev(0);
+            comprobador++;
         }
         if (!tfnot2Ev.getText().isEmpty()) {
             setNota2Ev(Float.parseFloat(tfnot2Ev.getText()));
 
         } else {
             setNota2Ev(0);
+            comprobador++;
         }
 
         if (!tfNotaFinal.getText().isEmpty()) {
             setNotaFinal(Float.parseFloat(tfNotaFinal.getText()));
         } else {
             setNotaFinal(0);
+            comprobador++;
         }
 
         if (!tfNotaExtra.getText().isEmpty()) {
             setNotaExtra(Float.parseFloat(tfNotaExtra.getText()));
         } else {
             setNotaExtra(0);
+            comprobador++;
         }
-
+        
         VentanaPrincipal principal = new VentanaPrincipal();
-        principal.aniadiralumno(this);
-
+        this.setVisible(false);
     }//GEN-LAST:event_btDarAltaActionPerformed
 
     private void tfNotaExtraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNotaExtraActionPerformed

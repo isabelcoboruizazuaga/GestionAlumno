@@ -121,27 +121,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void aniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aniadirActionPerformed
         //Muestro la ventana para dar de alta a un alumno
         AltaAlumno al = new AltaAlumno(this, rootPaneCheckingEnabled);
-        al.setVisible(rootPaneCheckingEnabled);       
+        al.setVisible(rootPaneCheckingEnabled);    
+        //Se comprueba si están vacíos los campos, si el usuario ha escrito se guardara en la tabla y en el array
+        if (al.getComprobador() != 5) {
+
+            //Obtengo los datos que escribe el usuario
+            String nombre = al.getNombre();
+            int matricula = al.getnMatricula();
+            float not1Ev = al.getNot1Ev();
+            float not2Ev = al.getNota2Ev();
+            float notFinal = al.getNotaFinal();
+            float notExtra = al.getNotaExtra();
+
+            //Lo paso al método para actualizar el array de alumnos
+            AlumnoAD alumno = transformarEnAlumno(matricula, nombre, not1Ev, not2Ev, notFinal, notExtra);
+            introducirAlumnoTabla(alumno);
+
+            //Actualizo el array
+            alumn.add(alumno);
+            Controladores.Main.alumnos = alumn;
+        
+    }                                       
+
+        
     }//GEN-LAST:event_aniadirActionPerformed
 
-    public void aniadiralumno(AltaAlumno al){
-        //Obtengo los datos que escribe el usuario
-        String nombre = al.getNombre();
-        int matricula = al.getnMatricula();
-        float not1Ev= al.getNot1Ev();
-        float not2Ev = al.getNota2Ev();
-        float notFinal= al.getNotaFinal();
-        float notExtra= al.getNotaExtra();
-        
-        
-        //Lo paso al método para actualizar el array de alumnos
-        AlumnoAD alumno= transformarEnAlumno(matricula, nombre, not1Ev, not2Ev, notFinal, notExtra);
-        introducirAlumnoTabla(alumno);
-        
-        //Actualizo el array
-        alumn.add(alumno);
-        Controladores.Main.alumnos= alumn;
-    }
     public AlumnoAD transformarEnAlumno(int nMatricula, String nombre, float not1Ev, float nota2Ev, float notaFinal, float notaExtra) {
         AlumnoAD alumno = new AlumnoAD(nMatricula, nombre, not1Ev, nota2Ev, notaFinal, notaExtra);
         return alumno;
@@ -161,11 +165,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             alumno = alumn.get(i);
             //Lo añado a la tabla
             introducirAlumnoTabla(alumno);
-        }
 
-        for (int i = 0; i < Controladores.Main.alumnos.size(); i++) {
-            System.out.println(Controladores.Main.alumnos.get(i));
         }
+        
     }
 
     public static void main(String args[]) {
