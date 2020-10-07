@@ -31,13 +31,17 @@ public class Main {
     public static void main(String[] args) {
 
         //Cargamos los datos del fichero
-        iniciar();
+        alumnos= iniciar();
         
-       //Carga la interfaz gráfica     
+        for(int i=0;i<alumnos.size();i++){
+            System.out.println(alumnos.get(i).getNombre());
+        }
+        
+       //Carga la interfaz gráfica y la rellena con el contenido del fichero
         VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
         ventanaPrincipal.setLocationRelativeTo(null);
         ventanaPrincipal.setVisible(true);
-        
+        ventanaPrincipal.sacarAlumnoArray(alumnos);
         
         ventanaPrincipal.addWindowListener(new WindowAdapter() {
             //se asegura de que al cerrar la ventana quede todo escrito en el fichero
