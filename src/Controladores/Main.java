@@ -22,26 +22,33 @@ import javax.swing.JOptionPane;
  */
 public class Main {
 
-    ArrayList<AlumnoAD> alumnos = new ArrayList<AlumnoAD>();
-    String ruta = "alumnos.txt";
+    public static ArrayList<AlumnoAD> alumnos = new ArrayList<AlumnoAD>();
+    static String ruta = "alumnos.txt";
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
+        //Cargamos los datos del fichero
+        iniciar();
+        
+       //Carga la interfaz gráfica     
         VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
         ventanaPrincipal.setLocationRelativeTo(null);
         ventanaPrincipal.setVisible(true);
-
+        
+        
         ventanaPrincipal.addWindowListener(new WindowAdapter() {
+            //se asegura de que al cerrar la ventana quede todo escrito en el fichero
             public void windowClosing(WindowEvent e) {
-                
+                escribir();
             }
         });
 
     }
 
-    public ArrayList<AlumnoAD> iniciar() {
+    public static ArrayList<AlumnoAD> iniciar() {
         ArrayList<AlumnoAD> alumn = new ArrayList<AlumnoAD>();
         File fichero = new File(ruta);
 
@@ -79,7 +86,7 @@ public class Main {
         return alumn;
     }
     
-    public void escribir(){
+    public static void escribir(){
         ArrayList<AlumnoAD> alumn = new ArrayList<AlumnoAD>();
         
         try {

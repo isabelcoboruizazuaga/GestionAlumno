@@ -16,7 +16,7 @@ import javax.swing.table.TableModel;
  * @author isabe
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
-    private AlumnoAD alumn;
+    ArrayList<AlumnoAD> alumn = Controladores.Main.alumnos;
     /**
      * Creates new form Interfaz
      */
@@ -127,21 +127,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         //Obtengo los datos que escribe el usuario
         nombre = al.getNombre();
         
+        //Lo paso al método para actualizar el array de alumnos
         darAlumno(0, nombre, 0, 0, 0, 0);
+        
         //Lo añado a la tabla
-//        DefaultTableModel modelo = (DefaultTableModel) miTabla.getModel();
-//        modelo.addRow(new Object[]{1, nombre, null, null, null, null});
-//        
+       DefaultTableModel modelo = (DefaultTableModel) miTabla.getModel();
+        modelo.addRow(new Object[]{1, nombre, null, null, null, null});
+       
 
     }//GEN-LAST:event_aniadirActionPerformed
 
     public void darAlumno(int nMatricula, String nombre, float not1Ev, float nota2Ev,float notaFinal,float notaExtra){
        AlumnoAD alumno= new AlumnoAD(nMatricula, nombre, not1Ev, nota2Ev, notaFinal, notaExtra);
-       alumn= alumno;
+       alumn.add(alumno);
+       Controladores.Main.alumnos= alumn;
+       for(int i=0;i<Controladores.Main.alumnos.size();i++){
+           System.out.println(Controladores.Main.alumnos.get(i));
     }
-    public AlumnoAD getAlumno(){
-        return alumn;
     }
+
     public void cargarTabla(AlumnoAD alumno){
         DefaultTableModel modelo = (DefaultTableModel) miTabla.getModel();
         modelo.addRow(new Object[]{alumno.getNMatricula(),alumno.getNombre(), alumno.getNot1Ev(),  alumno.getNota2Ev(),  alumno.getNotaFinal(),alumno.getNotaExtra()});
